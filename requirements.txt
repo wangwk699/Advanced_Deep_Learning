@@ -1,18 +1,23 @@
 # 依赖文件
 # pip install -r requirements.txt
 
-# 核心依赖
-torch>=1.13.0
-torchvision>=0.14.0
-transformers>=4.30.0
+# 核心依赖（GPU 版 PyTorch）
+torch==2.2.0+cu118
+torchvision==0.17.0+cu118
+torchaudio==2.2.0+cu118
+
+transformers==4.38.2
 datasets>=2.10.0
 
 # 数据处理
 Pillow>=9.0.0
 pandas>=1.3.0
-numpy>=1.21.0
+numpy==1.26.4
 tqdm>=4.60.0
 scikit-learn>=1.0.0
 
 # 进度显示
 accelerate>=0.20.0
+
+# PyTorch CUDA wheel 来源
+-f https://download.pytorch.org/whl/torch_stable.html
