@@ -70,7 +70,7 @@ def evaluate_known_classes(
 
     with torch.no_grad():
         for batch in tqdm(dataloader, desc="评估已知类"):
-            pixel_values = batch["pixel_values"].to(device)
+            pixel_values = batch["pixel_values"].to(device).float()
             labels = batch["label"].to(device)
 
             image_features = model.get_image_features(pixel_values)
@@ -118,7 +118,7 @@ def evaluate_open_set(
 
     with torch.no_grad():
         for batch in tqdm(known_dataloader, desc="开放集 - 已知类"):
-            pixel_values = batch["pixel_values"].to(device)
+            pixel_values = batch["pixel_values"].to(device).float()
             labels = batch["label"].to(device)
 
             image_features = model.get_image_features(pixel_values)
@@ -151,7 +151,7 @@ def evaluate_open_set(
 
     with torch.no_grad():
         for batch in tqdm(unknown_dataloader, desc="开放集 - 未知类"):
-            pixel_values = batch["pixel_values"].to(device)
+            pixel_values = batch["pixel_values"].to(device).float()
             labels = batch["label"].to(device)
 
             image_features = model.get_image_features(pixel_values)
@@ -281,9 +281,9 @@ def main():
 
     with torch.no_grad():
         model.logit_scale.data = torch.clamp(
-            torch.tensor([np.log(1 / args.temperature)], device=device),
-            min=np.log(1 / 100),
-            max=np.log(100),
+            torch.tensor([np.log(1 / args.temperature)], device=device, dtype=torch.float32),
+            min=np.log(1 / 100).astype(np.float32),
+            max=np.log(100).astype(np.float32),
         )
 
     print("\n" + "=" * 60)
