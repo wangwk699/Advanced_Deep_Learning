@@ -1,7 +1,7 @@
 #!/bin/bash
 # 阈值扫描脚本 - 寻找最佳开放集识别阈值
 
-export CUDA_VISIBLE_DEVICES=0
+export CUDA_VISIBLE_DEVICES=1
 DATA_ROOT="./Food_Multimodal"
 
 for threshold in 0.2 0.25 0.3 0.35 0.4 0.45 0.5

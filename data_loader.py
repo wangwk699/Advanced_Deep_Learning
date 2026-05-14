@@ -14,6 +14,9 @@ from torch.utils.data import Dataset
 from torchvision import transforms
 from datasets import load_dataset
 
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+
 # 已知类别：对应大作业要求中的薯条、油条、包子、米饭、小蛋糕。
 # 注意顺序会影响类别 id，请与 metadata.csv 中的 label 保持一致。
 KNOWN_CLASSES = ["baozi", "cupcake", "french_fries", "rice", "youtiao"]
@@ -105,7 +108,7 @@ class Food101Dataset(Dataset):
         self.max_samples_per_class = max_samples_per_class
 
         try:
-            dataset = load_dataset("food101", split=split, trust_remote_code=True)
+            dataset = load_dataset("food101", split=split)
         except Exception as exc:
             raise RuntimeError(
                 f"加载 Food-101 失败: {exc}\n"

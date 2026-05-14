@@ -3,6 +3,7 @@
 
 # 指定使用的 GPU 设备
 export CUDA_VISIBLE_DEVICES=1
+export TOKENIZERS_PARALLELISM=false
 
 # 数据集路径（根据实际环境修改）
 DATA_ROOT="./Food_Multimodal"
@@ -16,7 +17,7 @@ python main.py \
   --use_energy_score false \
   --temperature 0.07 \
   --max_unknown_per_class 50 \
-  --output_dir ./results \
+  --output_dir ./results1 \
   --per_device_eval_batch_size 32 \
   --dataloader_num_workers 4 \
   --report_to none \
