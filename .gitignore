@@ -7,9 +7,10 @@ Food_Multimodal/
 .cache/
 
 # 运行输出
-# results*/
+results*/
 runs/
 *.log
+*.sh
 
 # 系统文件
 .DS_Store

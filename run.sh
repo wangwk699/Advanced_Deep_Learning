@@ -10,8 +10,7 @@ Ensemble=false
 INDEX=3
 SAVE_DIR="./results/log2/prompt_ensemble_${Ensemble}/templates_index_${INDEX}"
 
-# -m debugpy --listen 6001 --wait-for-client
-python main.py \
+python -m debugpy --listen 6001 --wait-for-client main.py \
   --data_root ${DATA_ROOT} \
   --model_name openai/clip-vit-base-patch32 \
   --image_size 224 \
