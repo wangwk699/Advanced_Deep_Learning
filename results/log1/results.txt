@@ -1,0 +1,192 @@
+===== 实验配置 =====
+OurArguments(
+_n_gpu=1,
+accelerator_config={'split_batches': False, 'dispatch_batches': None, 'even_batches': True, 'use_seedable_sampler': True},
+adafactor=False,
+adam_beta1=0.9,
+adam_beta2=0.999,
+adam_epsilon=1e-08,
+auto_find_batch_size=False,
+bf16=False,
+bf16_full_eval=False,
+data_root=./Food_Multimodal,
+data_seed=None,
+dataloader_drop_last=False,
+dataloader_num_workers=4,
+dataloader_persistent_workers=False,
+dataloader_pin_memory=True,
+dataloader_prefetch_factor=None,
+ddp_backend=None,
+ddp_broadcast_buffers=None,
+ddp_bucket_cap_mb=None,
+ddp_find_unused_parameters=None,
+ddp_timeout=1800,
+debug=[],
+deepspeed=None,
+disable_tqdm=False,
+dispatch_batches=None,
+do_eval=False,
+do_predict=False,
+do_train=False,
+eval_accumulation_steps=None,
+eval_delay=0,
+eval_steps=None,
+evaluation_strategy=no,
+fp16=False,
+fp16_backend=auto,
+fp16_full_eval=False,
+fp16_opt_level=O1,
+fsdp=[],
+fsdp_config={'min_num_params': 0, 'xla': False, 'xla_fsdp_v2': False, 'xla_fsdp_grad_ckpt': False},
+fsdp_min_num_params=0,
+fsdp_transformer_layer_cls_to_wrap=None,
+full_determinism=False,
+gradient_accumulation_steps=1,
+gradient_checkpointing=False,
+gradient_checkpointing_kwargs=None,
+greater_is_better=None,
+group_by_length=False,
+half_precision_backend=auto,
+hub_always_push=False,
+hub_model_id=None,
+hub_private_repo=False,
+hub_strategy=every_save,
+hub_token=<HUB_TOKEN>,
+ignore_data_skip=False,
+image_size=224,
+include_inputs_for_metrics=False,
+include_num_input_tokens_seen=False,
+include_tokens_per_second=False,
+jit_mode_eval=False,
+label_names=None,
+label_smoothing_factor=0.0,
+learning_rate=5e-05,
+length_column_name=length,
+load_best_model_at_end=False,
+local_rank=0,
+log_level=passive,
+log_level_replica=warning,
+log_on_each_node=True,
+logging_dir=./results/runs/May15_08-39-44_server33,
+logging_first_step=False,
+logging_nan_inf_filter=True,
+logging_steps=500,
+logging_strategy=steps,
+lr_scheduler_kwargs={},
+lr_scheduler_type=linear,
+max_grad_norm=1.0,
+max_steps=-1,
+max_unknown_per_class=50,
+metric_for_best_model=None,
+model_name=openai/clip-vit-base-patch32,
+mp_parameters=,
+neftune_noise_alpha=None,
+no_cuda=False,
+num_train_epochs=3.0,
+optim=adamw_torch,
+optim_args=None,
+output_dir=./results,
+overwrite_output_dir=False,
+past_index=-1,
+per_device_eval_batch_size=32,
+per_device_train_batch_size=8,
+prediction_loss_only=False,
+prompt_ensemble=True,
+push_to_hub=False,
+push_to_hub_model_id=None,
+push_to_hub_organization=None,
+push_to_hub_token=<PUSH_TO_HUB_TOKEN>,
+ray_scope=last,
+remove_unused_columns=True,
+report_to=[],
+resume_from_checkpoint=None,
+run_name=clip_food_unified_zero_shot,
+save_on_each_node=False,
+save_only_model=False,
+save_safetensors=True,
+save_steps=500,
+save_strategy=steps,
+save_total_limit=None,
+seed=42,
+skip_memory_metrics=True,
+split_batches=None,
+temperature=0.07,
+tf32=None,
+torch_compile=False,
+torch_compile_backend=None,
+torch_compile_mode=None,
+torchdynamo=None,
+tpu_metrics_debug=False,
+tpu_num_cores=None,
+use_cpu=False,
+use_ipex=False,
+use_legacy_prediction_loop=False,
+use_mps_device=False,
+warmup_ratio=0.0,
+warmup_steps=0,
+weight_decay=0.0,
+)
+
+===== 类别设置 =====
+known classes: ['baozi', 'cupcake', 'french_fries', 'rice', 'youtiao']
+unknown classes: ['hamburger', 'pizza', 'sushi', 'steak', 'ice_cream']
+all candidate classes: ['baozi', 'cupcake', 'french_fries', 'rice', 'youtiao', 'hamburger', 'pizza', 'sushi', 'steak', 'ice_cream']
+
+===== 方法说明 =====
+本实验将 known classes 与 unknown classes 合并为统一候选标签集合，计算每张图像与所有候选文本标签的 CLIP 相似度，并直接选择相似度最高的类别。本版本不使用阈值拒识，也不进行阈值扫描。
+
+===== 已知类 known-only closed-set 诊断评估 =====
+验证集准确率: 97.78%
+测试集准确率: 94.44%
+              precision    recall  f1-score   support
+
+       baozi       0.86      1.00      0.92        18
+     cupcake       1.00      0.78      0.88        18
+french_fries       1.00      0.94      0.97        18
+        rice       1.00      1.00      1.00        18
+     youtiao       0.90      1.00      0.95        18
+
+    accuracy                           0.94        90
+   macro avg       0.95      0.94      0.94        90
+weighted avg       0.95      0.94      0.94        90
+
+===== 统一 10 类 zero-shot 开放集评估 =====
+overall_accuracy: 96.76%
+known_accuracy: 92.22%
+unknown_accuracy: 98.40%
+known_unknown_region_accuracy: 98.53%
+known_total: 90
+unknown_total: 250
+pred_distribution: {'baozi': 22, 'cupcake': 14, 'sushi': 51, 'ice_cream': 48, 'youtiao': 20, 'french_fries': 17, 'rice': 18, 'hamburger': 51, 'pizza': 49, 'steak': 50}
+unknown_pred_distribution: {'hamburger': 51, 'pizza': 49, 'sushi': 50, 'steak': 50, 'ice_cream': 47, 'cupcake': 2, 'baozi': 1}
+
+===== 统一 10 类分类报告 =====
+              precision    recall  f1-score   support
+
+       baozi       0.82      1.00      0.90        18
+     cupcake       0.86      0.67      0.75        18
+french_fries       1.00      0.94      0.97        18
+        rice       1.00      1.00      1.00        18
+     youtiao       0.90      1.00      0.95        18
+   hamburger       0.98      1.00      0.99        50
+       pizza       1.00      0.98      0.99        50
+       sushi       0.98      1.00      0.99        50
+       steak       1.00      1.00      1.00        50
+   ice_cream       0.98      0.94      0.96        50
+
+    accuracy                           0.97       340
+   macro avg       0.95      0.95      0.95       340
+weighted avg       0.97      0.97      0.97       340
+
+
+===== 统一 10 类混淆矩阵 =====
+[[18  0  0  0  0  0  0  0  0  0]
+ [ 3 12  0  0  1  0  0  1  0  1]
+ [ 0  0 17  0  1  0  0  0  0  0]
+ [ 0  0  0 18  0  0  0  0  0  0]
+ [ 0  0  0  0 18  0  0  0  0  0]
+ [ 0  0  0  0  0 50  0  0  0  0]
+ [ 0  0  0  0  0  1 49  0  0  0]
+ [ 0  0  0  0  0  0  0 50  0  0]
+ [ 0  0  0  0  0  0  0  0 50  0]
+ [ 1  2  0  0  0  0  0  0  0 47]]

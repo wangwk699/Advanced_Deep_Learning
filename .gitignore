@@ -7,7 +7,7 @@ Food_Multimodal/
 .cache/
 
 # 运行输出
-results*/
+# results*/
 runs/
 *.log
 
